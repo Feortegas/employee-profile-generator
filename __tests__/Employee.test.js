@@ -14,6 +14,18 @@ test('gets employee name', () => {
     expect(employee.getName()).toEqual(expect.stringContaining('Fernando Ortega'));
 });
 
+test('gets employee id', () => {
+    const employee = new Employee('Fernando Ortega');
+
+    expect(employee.getId()).not.toBe('');
+});
+
+test('gets employee email', () => {
+    const employee = new Employee('Fernando Ortega');
+
+    expect(employee.getEmail()).toEqual(expect.stringContaining('@tech.com'));
+});
+
 test('gets the employee role', () => {
     const employee = new Employee('Fernando Ortega');
 
