@@ -17,6 +17,7 @@ newManager = async () => {
     manager.officeNumber = await manager.getOfficeNumber();
     manager.role = 'Manager';
     
+    // build the managerData array with new manager entry
     managerData.push(manager.name, manager.id, manager.email, manager.officeNumber, manager.role);
 
     return await choseNewEmployee();
@@ -51,6 +52,7 @@ const newEngineer = async () => {
     engineer.gitHub = await engineer.getGitHub();
     engineer.role = 'Engineer';
 
+    // build the engineerData array with new engineer entry
     engineerData.push(engineer.name, engineer.id, engineer.email, engineer.gitHub, engineer.role);
 
     return await choseNewEmployee();
@@ -66,6 +68,7 @@ const newIntern = async () => {
     intern.school = await intern.getSchool();
     intern.role = 'Intern';
 
+    // build the internData array with new intern entry
     internData.push(intern.name, intern.id, intern.email, intern.school, intern.role);
 
     return await choseNewEmployee();
@@ -79,11 +82,10 @@ const createPage = async () => {
 };
 
 function init() {
-    console.log('Welcome to Tech.com Employee management app.');
+    console.log('Welcome to Tech.com Employee Management App.');
 
-    // create new manager
+    // create new Manager Employee
     newManager();
-
 }
 
 init();
