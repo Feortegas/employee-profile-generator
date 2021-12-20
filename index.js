@@ -1,6 +1,9 @@
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
+const fs = require('fs');
+const generatePage = require('./src/page-template.js');
+const { writeFile } = require('./utils/generate-site');
 const { async } = require('rxjs');
 const inquirer = require('inquirer');
 let managerData = [];
@@ -18,7 +21,8 @@ newManager = async () => {
     manager.role = 'Manager';
     
     // build the managerData array with new manager entry
-    managerData.push(manager.name, manager.id, manager.email, manager.officeNumber, manager.role);
+    // managerData.push(manager.name, manager.id, manager.email, manager.officeNumber, manager.role);
+    managerData.push(manager);
 
     return await choseNewEmployee();
 };
@@ -53,7 +57,8 @@ const newEngineer = async () => {
     engineer.role = 'Engineer';
 
     // build the engineerData array with new engineer entry
-    engineerData.push(engineer.name, engineer.id, engineer.email, engineer.gitHub, engineer.role);
+    // engineerData.push(engineer.name, engineer.id, engineer.email, engineer.gitHub, engineer.role);
+    engineerData.push(engineer);
 
     return await choseNewEmployee();
 };
@@ -69,16 +74,16 @@ const newIntern = async () => {
     intern.role = 'Intern';
 
     // build the internData array with new intern entry
-    internData.push(intern.name, intern.id, intern.email, intern.school, intern.role);
+    // internData.push(intern.name, intern.id, intern.email, intern.school, intern.role);
+    internData.push(intern);
 
     return await choseNewEmployee();
 };
 
 // Create HTML file
 const createPage = async () => {
-    console.log(managerData);
-    console.log(engineerData);
-    console.log(internData);
+    const pageHTML = generatePage(managerData, engineerData, internData);
+    return await writeFile(pageHTML);
 };
 
 function init() {
