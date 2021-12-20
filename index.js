@@ -1,10 +1,11 @@
-// const questions = require('./src/questions');
-const Questions = require('./src/questions');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const { async } = require('rxjs');
 const inquirer = require('inquirer');
+let managerData = [];
+let engineerData = [];
+let internData = [];
 
 
 // New Manager function
@@ -16,16 +17,19 @@ newManager = async () => {
     manager.officeNumber = await manager.getOfficeNumber();
     manager.role = 'Manager';
     
+    managerData.push(manager.name, manager.id, manager.email, manager.officeNumber, manager.role);
+
     return await choseNewEmployee();
 };
 
+// chose what new employee to add or exit the app - then it generates the HTML file
 const choseNewEmployee = async () => {
     const getRole = await inquirer.prompt({
         // inquirer - ask for employee role - Engineer or Intern
         type: 'list',
         name: 'role',
         message: `Chose to create an Engineer or an Intern or exit the app`,
-        choices: ['Engineer', 'Intern', 'exit app']
+        choices: ['Engineer', 'Intern', 'Exit App']
     })
     const role = await getRole.role;
     
@@ -33,7 +37,7 @@ const choseNewEmployee = async () => {
         await newEngineer();
     } else if (role === 'Intern') {
         await newIntern();
-    } else if (role === 'exit app') {
+    } else if (role === 'Exit App') {
         await createPage();
     }
 };
@@ -46,6 +50,8 @@ const newEngineer = async () => {
     engineer.email = await engineer.getEmail();
     engineer.gitHub = await engineer.getGitHub();
     engineer.role = 'Engineer';
+
+    engineerData.push(engineer.name, engineer.id, engineer.email, engineer.gitHub, engineer.role);
 
     return await choseNewEmployee();
 };
@@ -60,12 +66,16 @@ const newIntern = async () => {
     intern.school = await intern.getSchool();
     intern.role = 'Intern';
 
+    internData.push(intern.name, intern.id, intern.email, intern.school, intern.role);
+
     return await choseNewEmployee();
 };
 
 // Create HTML file
 const createPage = async () => {
-    console.log('create page');
+    console.log(managerData);
+    console.log(engineerData);
+    console.log(internData);
 };
 
 function init() {
@@ -73,21 +83,7 @@ function init() {
 
     // create new manager
     newManager();
-   
 
-    // create Manager Employee
-    // const nextEmployee = newManager();
-
-    // // check what employee role to create next
-    // if (employeeData.role === 'Engineer') {
-    //     // prompt Engineer questions
-    //     return new Questions().promptUserEngineer();
-    // } else if (employeeData.role === 'Intern') {
-    //     // prompt Intern questions
-    //     return new Questions().promptUserIntern();
-    // } else if (employeeData.role === 'exit app') {
-    //     return employeeData;
-    // }
 }
 
 init();
